@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		body {
+			background-color: #faebcc
+		}
+       
+		.container {
+			width: 80%;
+			margin: 100px auto;
+			background: #d6e9c6;
+		}
+		.container form {
+			width: 100%;
+			height: 50px;
+			text-align: center;
+			border-radius: 3px;
+			border:1px solid #222;
+			padding: 20px 0;
+			vertical-align: middle;
+		}
+		input {
+			width: 200px;
+			height: 3em;
+		}
+		
+	</style>
+</head>
+<body>
+    <!-- 后端传递过来的数值 -->
+	<div class="container">
+        <div>
+			<p><%=total_count%></p>
+            <ul>
+				<% json.forEach(function(item){%>
+					<% if(item && item.title) { %>
+						<ul>
+							<li>标题：<a href="<%= item.content_url%>" target=""><%= item.title%> </a> </li>
+							<li>阅读量：<%= item.read_num%></li>
+							<li>点赞量：<%= item.like_num%></li>
+							<li>评论量：<%= item.comment_num%></li>
+							<li>分享量：<%= item.share_type%></li>
+							<li>文章修改次数：<%= item.modify_status%></li>
+						</ul>
+						<hr>
+					<%}%>
+				<% }) %>
+			</ul>
+            
+        </div>
+	</div>
+	<script>
+	</script>
+</body>
+</html>

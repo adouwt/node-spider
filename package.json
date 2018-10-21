@@ -1,13 +1,14 @@
 {
-  "name": "adou",
+  "name": "node-spider",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
   "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
     "ejs": "^2.3.4",
     "express": "^4.13.3",
     "express-session": "^1.11.3",
-    "socket.io": "^1.3.7"
+    "request": "^2.88.0"
   },
   "devDependencies": {},
   "scripts": {
