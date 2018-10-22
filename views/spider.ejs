@@ -35,7 +35,7 @@
         <div>
 			<p><%=total_count%></p>
             <ul>
-				<% json.forEach(function(item){%>
+				<% json.forEach(function(item,i){%>
 					<% if(item && item.title) { %>
 						<ul>
 							<li>标题：<a href="<%= item.content_url%>" target=""><%= item.title%> </a> </li>
@@ -44,6 +44,7 @@
 							<li>评论量：<%= item.comment_num%></li>
 							<li>分享量：<%= item.share_type%></li>
 							<li>文章修改次数：<%= item.modify_status%></li>
+							<li>文章标号：<%= i+1%></li>
 						</ul>
 						<hr>
 					<%}%>
