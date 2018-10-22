@@ -26,38 +26,60 @@
 			width: 200px;
 			height: 3em;
 		}
-		
+		tbody td {
+			text-align: center;
+			line-height: 25px;
+		}
+		thead th {
+			min-width: 150px;
+		}
+		thead th i{
+			cursor: pointer;
+		}
+		tbody td:nth-child(1) {
+			padding-left: 15px;
+			text-align: left;
+			width: 380px;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
+			display: inline-block;
+		}
+		tr {
+			height: 44px;
+			line-height: 44px;
+		}
 	</style>
+	<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
 </head>
 <body>
     <!-- 后端传递过来的数值 -->
 	<div class="container">
-		<% if(json){%>
-			<div>
-				<p><%=total_count%></p>
-				<ul>
-					<% json.forEach(function(item,i){%>
-						<% if(item && item.title) { %>
-							<ul>
-								<li>标题：<a href="<%= item.content_url%>" target=""><%= item.title%> </a> </li>
-								<li>阅读量：<%= item.read_num%></li>
-								<li>点赞量：<%= item.like_num%></li>
-								<li>评论量：<%= item.comment_num%></li>
-								<li>分享量：<%= item.share_type%></li>
-								<li>文章修改次数：<%= item.modify_status%></li>
-								<li>文章标号：<%= i+1%></li>
-							</ul>
-							<hr>
-						<%}%>
-					<% }) %>
-				</ul>
-				
-			</div>
-		<%} else {%>
-			<h4>请稍后，数据在正在抓取中...</h4>
-		<%}%>
+		<table>
+			<thead>
+				<th>标题</th>
+				<th>阅读量 <i class="up">up</i> <i class="down">down</i></th>
+				<th>点赞量 <i class="up">up</i> <i class="down">down</i></th>
+				<th>评论量 <i class="up">up</i> <i class="down">down</i></th>
+				<th>分享量 <i class="up">up</i> <i class="down">down</i></th>
+			</thead>
+			<tbody>
+				<% json.forEach(function(item,i){%>
+					<% if(item && item.title) { %>
+						<tr>
+							<td><a href="<%= item.content_url%>" target=""><%= item.title%> </a> </td>
+							<td><%= item.read_num%></td>
+							<td><%= item.like_num || 0%></td>
+							<td><%= item.comment_num || 0%></td>
+							<td><%= 0 || item.share_type || 0%></td>
+						</tr>
+					<%}%>
+				<% }) %>
+			</tbody>
+		</table>
 	</div>
 	<script>
+
 	</script>
 </body>
 </html>
