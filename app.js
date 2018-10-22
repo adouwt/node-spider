@@ -22,6 +22,7 @@ app.get("/spider", (req,res,next) => {
 	var json = '';
 	var sent_list = []
 	function getPageData () {
+		console.time('getRequest')
 	    return	new Promise ((resolve, reject) => {
 			function getRequest () {
 				request({
@@ -41,6 +42,12 @@ app.get("/spider", (req,res,next) => {
 							begin = begin + 7
 							url = 'https://mp.weixin.qq.com/cgi-bin/newmasssendpage?count=7&begin='+ begin +'&token=710333876&lang=zh_CN&token=710333876&lang=zh_CN&f=json&ajax=1'
 							getRequest()
+						} else {
+							begin = 0; // 递归结束后重置未0
+							url = 'https://mp.weixin.qq.com/cgi-bin/newmasssendpage?count=7&begin='+ begin +'&token=710333876&lang=zh_CN&token=710333876&lang=zh_CN&f=json&ajax=1'
+							console.log('递归结束');
+							console.timeEnd('getRequest')
+							handelData()
 						}
 						// console.log(sent_list)
 					}
@@ -72,34 +79,27 @@ app.get("/spider", (req,res,next) => {
 		})
 	}
 
+	function handelData () {
+		var pageArr = [];
+		var dataArr = [];
+		for (let n =0; n<sent_list.length; n++) {
+			dataArr.push(sent_list[n])
+		}
+
+		for(var i = 0; i<dataArr.length;i++) {
+			for (var j =0;j<dataArr[i].length;j++) {
+				pageArr.push(dataArr[i][j].appmsg_info[0])
+			}
+		}
+		
+		res.render("spider",{
+			"json":pageArr,
+			'total_count': total_count
+		});
+	}
+
 	getTotalCount().then(()=> {
-		getPageData().then(()=>{
-			setTimeout(function(){
-				// console.log(JSON.stringify(sent_list))
-				fs.writeFile("./data.txt",JSON.stringify(sent_list),function(err){
-					console.log(err)
-				})
-				var pageArr = [];
-				var dataArr = [];
-				for (let n =0; n<sent_list.length; n++) {
-					dataArr.push(sent_list[n])
-				}
-				console.log(dataArr)
-				fs.writeFile("./dataarr.txt",JSON.stringify(dataArr),function(err){
-					console.log(err)
-				})
-				for(var i = 0; i<dataArr.length;i++) {
-					for (var j =0;j<dataArr[i].length;j++) {
-						pageArr.push(dataArr[i][j].appmsg_info[0])
-					}
-				}
-				
-				res.render("spider",{
-					"json":pageArr,
-					'total_count': total_count
-				});
-			},3000)
-		})
+		getPageData()
 	}).then(()=>{
 		console.log(2)
 	})
