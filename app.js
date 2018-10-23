@@ -8,8 +8,6 @@ const port = 4000;
 app.set("view engine","ejs");
 //静态服务
 app.use(express.static("./public"));
-// var url = 'http://www.runoob.com/nodejs/nodejs-express-framework.html'
-// var url = 'https://mp.weixin.qq.com/cgi-bin/home?t=home/index&lang=zh_CN&token=524646189'
 var count = 7;
 var begin = 0;
 var total_count = 0;
@@ -86,9 +84,11 @@ app.get("/spiderJson", (req,res,next) => {
 			dataArr.push(sent_list[n])
 		}
 
-		for(var i = 0; i<dataArr.length;i++) {
-			for (var j =0;j<dataArr[i].length;j++) {
-				pageArr.push(dataArr[i][j].appmsg_info[0])
+		if (dataArr.length>0){
+			for(var i = 0; i<dataArr.length;i++) {
+				for (var j =0;j<dataArr[i].length;j++) {
+					pageArr.push(dataArr[i][j].appmsg_info[0])
+				}
 			}
 		}
 		

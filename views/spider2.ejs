@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="/css/base.css">
+	<script src='/js/vue2-min.js'></script>
+	<script src="/js/axios.js"></script>
+	
+</head>
+<body>
+	<!-- 后端传递过来的数值 -->
+	<div id="app">
+		<div class="container" v-if="dataArr.length">
+			
+		</div>
+		<div class="container" v-if="!dataArr.length">
+			<h3>数据抓取中，请稍后...</h3>
+		</div>
+	</div>
+	<script>
+		new Vue({
+			el: '#app',
+			data () {
+				return {
+					dataArr: [],
+					total_count: 0,
+					message: 'this is a demo'
+				}
+			},
+			created () {
+				let _this = this;
+				axios.get('/app2')
+					.then(function (response) {
+						_this.dataArr = response.data.pageArr
+						_this.total_count = response.data.total_count
+						console.log(_this.dataArr)
+					})
+					.catch(function (error) {
+						console.log(error);
+				});
+			}
+		})
+	</script>
+</body>
+</html>
