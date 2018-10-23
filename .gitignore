@@ -2,7 +2,7 @@
 node_modules/
 /dist/
 npm-debug.log*
-out.log
+*.log
 *.txt
 yarn-debug.log*
 yarn-error.log*
