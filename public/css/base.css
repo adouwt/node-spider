@@ -1,0 +1,45 @@
+body {
+    background-color: #faebcc
+}
+
+.container {
+    width: 80%;
+    margin: 100px auto;
+    background: #d6e9c6;
+}
+.container form {
+    width: 100%;
+    height: 50px;
+    text-align: center;
+    border-radius: 3px;
+    border:1px solid #222;
+    padding: 20px 0;
+    vertical-align: middle;
+}
+input {
+    width: 200px;
+    height: 3em;
+}
+tbody td {
+    text-align: center;
+    line-height: 25px;
+}
+thead th {
+    min-width: 150px;
+}
+thead th i{
+    cursor: pointer;
+}
+tbody td:nth-child(1) {
+    padding-left: 15px;
+    text-align: left;
+    width: 380px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+}
+tr {
+    height: 44px;
+    line-height: 44px;
+}
