@@ -17,6 +17,7 @@
 			</p>
 			<table>
 				<thead>
+					<th>标号</th>
 					<th>标题</th>
 					<th>阅读量 <i class="up">up</i> <i class="down">down</i></th>
 					<th>点赞量 <i class="up">up</i> <i class="down">down</i></th>
@@ -25,6 +26,7 @@
 				</thead>
 				<tbody>
 					<tr v-for="(item, index) in dataArr" v-if="item">
+						<td>{{index+1}}</td>
 						<td><a :href="item.content_url" target="">{{item.title}} </a></td>
 						<td>{{ item.read_num || 0 }}</td>
 						<td>{{ item.like_num || 0 }}</td>

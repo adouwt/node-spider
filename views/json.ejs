@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+    <link rel="stylesheet" href="/css/base.css">
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <style>
+        /* 覆盖element-ui的css */
+        tbody td:nth-child(1) {
+            width: 100%;
+        }
+        .a-link {
+            color: #00c1de;
+        }
+        .text-center {
+            text-align: center;
+            padding-top: 20px;
+        }
+    </style>
+	<script src='/js/vue2-min.js'></script>
+    <script src="/js/axios.js"></script>
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="/js/formate-time.js"></script>
+</head>
+<body>
+	<!-- 后端传递过来的数值 -->
+	<div id="app">
+		<div class="container" v-if="tableData6.length">
+            <h3 class="text-center">所有数据排行如下</h3>
+			<el-table
+            :data="tableData6"
+            border
+            style="width: 100%">
+                
+                </el-table-column>
+                <el-table-column
+                prop="title"
+                label="标题">
+                </el-table-column>
+                <el-table-column
+                prop="read_num"
+                sortable
+                label="阅读量">
+                </el-table-column>
+                <el-table-column
+                prop="like_num"
+                sortable
+                label="点赞量">
+                </el-table-column>
+                <el-table-column
+                prop="comment_num"
+                sortable
+                label="评论量">
+                </el-table-column>
+                <el-table-column
+                prop="pubTime"
+                sortable
+                label="发布时间">
+                </el-table-column>
+                <el-table-column
+                prop="content_url"
+                label="文章地址">
+                    <template slot-scope="scope">
+                      <a :href="scope.row.content_url" target="black" class="a-link">原文链接</a>
+                    </template>
+                </el-table-column>
+                <el-table-column
+                label="备注">
+                    <template slot-scope="scope">
+                        <span >{{scope.row.is_deleted == true ? '已经删除' : ''}}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column
+                label="序号"
+                type="index"
+                width="80">
+                </el-table-column>
+            </el-table>
+		</div>
+		<div class="container" v-if="!tableData6.length">
+			<h3>数据抓取中，请稍后...</h3>
+		</div>
+	</div>
+	<script>
+		new Vue({
+			el: '#app',
+			data () {
+				return {
+					tableData6: []
+				}
+			},
+			created () {
+				let _this = this;
+				axios.get('/alljson')
+					.then(function (res) {
+                        // console.log(res.data)
+                        // // 后面看看有没有合适的数组降维/合并的方法
+                        let data = res.data
+                        let handelArr  = []
+                        for (let i = 0;i<data.length;i++) {
+                            for (let j = 0;j< data[i].appmsg_info.length;j++) {
+                                data[i].appmsg_info[j].pubTime =  formate(data[i].sent_info.time)
+                                handelArr.push(data[i].appmsg_info[j])
+                            }
+                        }
+                        _this.tableData6 = handelArr
+                        // console.log(_this.tableData6.length)
+					})
+					.catch(function (error) {
+						console.log(error);
+				});
+			}
+		})
+	</script>
+</body>
+</html>
