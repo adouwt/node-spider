@@ -30,7 +30,7 @@ app.get("/spider",function (req,res,next) {
 		if (!error && response.statusCode == 200) {
 			var $ = cheerio.load(body);
 			console.log(body)
-			fs.writeFile("./data.txt",body,function(err){
+			fs.writeFile(`./body-${new Date()}.txt`,body,function(err){
 				console.log(err)
 			})
 			var a_arr =	$('.weui-desktop-mass-media__data__inner');
